@@ -11,6 +11,8 @@
   "type": "commonjs",
   "description": "Neural network text learning system",
   "dependencies": {
-    "readline": "^1.3.0"
+    "@tensorflow/tfjs": "^4.10.0",
+    "natural": "^6.7.0", 
+    "readline-sync": "^1.4.10"
   }
 }
