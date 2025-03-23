@@ -1,48 +1,80 @@
-# Neru - Teaching Guide
+# Neru - A Simple Neural Network Implementation
 
-## How to Teach Neru
+Neru is a lightweight JavaScript implementation of a feedforward neural network. This project provides a simple and educational neural network that can be trained to solve basic problems like logical operations.
 
-Neru learns through these key methods:
+## Features
 
-### 1. Conversation + Feedback
-The primary way Neru learns is through conversations with you:
+- Simple feedforward neural network with configurable layers
+- Backpropagation algorithm for training
+- Sigmoid activation function
+- Customizable learning rate
+- Utility method for quick network creation and training
 
-1. **Input text:** Provide clear, well-formed sentences
-2. **Rate responses:** After each response, rate it from 1-5
-   - Higher ratings (4-5) reinforce good responses
-   - Lower ratings (1-2) help Neru learn what to avoid
+## Getting Started
 
-Example:
-```
-You: What's the weather like today?
-Neru: I'm still learning. Please teach me more!
-Rate response (1-5, 5 being best): 3
-```
+### Prerequisites
 
-### 2. Training Explicitly
-After several conversations are stored in memory:
+- Node.js installed on your system
 
-1. Type `train` at the prompt to process collected data
-2. Neru will analyze past conversations and improve its model
-3. Training is more effective with at least 10-15 conversation examples
+### Installation
 
-```
-You: train
-Training model...
-Epoch 0: loss = 1.2345, accuracy = 0.3456
-...
-Training complete!
+Clone the repository and navigate to the project directory:
+
+```bash
+git clone https://github.com/yourusername/neru.git
+cd neru
 ```
 
-### 3. Teaching Best Practices
+## Usage
 
-- **Start simple:** Begin with short, clear sentences
-- **Be consistent:** Rate similar responses similarly
-- **Provide variety:** Give different types of inputs
-- **Be patient:** The model improves gradually over time
-- **Correct mistakes:** When Neru gives poor responses, rate them lower
-- **Reward good responses:** When responses make sense, rate them higher
+```javascript
+// Import the NeuralNetwork class
+const { NeuralNetwork } = require('./main.js');
 
-### 4. Memory System
+// Define your training data
+const trainingData = [
+  { inputs: [0, 0], outputs: [0] }, // Example: XOR operation
+  { inputs: [0, 1], outputs: [1] },
+  { inputs: [1, 0], outputs: [1] },
+  { inputs: [1, 1], outputs: [0] }
+];
 
-All interactions are stored in `memory.json` and used for future learning. More data means better responses over time.
+// Create and train a network
+const network = NeuralNetwork.createNetwork(trainingData, 10000);
+
+// Use the trained network
+const result = network.feedForward([1, 0]);
+console.log(`Prediction: ${result}`);
+```
+
+## How It Works
+
+The neural network consists of:
+1. An input layer (size determined by your input data)
+2. A hidden layer (configurable size, default is 4 neurons)
+3. An output layer (size determined by your output data)
+
+The network uses:
+- Sigmoid activation function: `1 / (1 + Math.exp(-x))`
+- Backpropagation for training
+- A default learning rate of 0.3
+
+## Example
+
+The included example trains the network to understand the XOR logical operation:
+
+| Input 1 | Input 2 | Output |
+|---------|---------|--------|
+| 0       | 0       | 0      |
+| 0       | 1       | 1      |
+| 1       | 0       | 1      |
+| 1       | 1       | 0      |
+
+Run the example:
+
+```bash
+node main.js
+```
+
+Expected output:
+
