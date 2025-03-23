@@ -1,18 +1,21 @@
 {
   "name": "neru",
   "version": "1.0.0",
+  "description": "Neru learns through these key methods:",
   "main": "main.js",
   "scripts": {
-    "start": "node --watch main.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kichu12348/neru.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
-  "description": "Neural network text learning system",
-  "dependencies": {
-    "@tensorflow/tfjs": "^4.10.0",
-    "natural": "^6.7.0", 
-    "readline-sync": "^1.4.10"
-  }
+  "bugs": {
+    "url": "https://github.com/kichu12348/neru/issues"
+  },
+  "homepage": "https://github.com/kichu12348/neru#readme"
 }
