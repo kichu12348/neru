@@ -21,7 +21,7 @@ Neru is a lightweight JavaScript implementation of a feedforward neural network.
 Clone the repository and navigate to the project directory:
 
 ```bash
-git clone https://github.com/yourusername/neru.git
+git clone https://github.com/kichu12348/neru.git
 cd neru
 ```
 
