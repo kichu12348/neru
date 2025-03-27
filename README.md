@@ -1,80 +1,117 @@
 # Neru - A Simple Neural Network Implementation
 
-Neru is a lightweight JavaScript implementation of a feedforward neural network. This project provides a simple and educational neural network that can be trained to solve basic problems like logical operations.
+Neru is a lightweight neural network library implemented in TypeScript. It provides a simple, educational implementation of feed-forward neural networks with backpropagation learning.
 
 ## Features
 
-- Simple feedforward neural network with configurable layers
-- Backpropagation algorithm for training
+- Simple, understandable implementation of neural networks
+- Feed-forward propagation
+- Simplified backpropagation learning
+- Configurable network architecture
 - Sigmoid activation function
-- Customizable learning rate
-- Utility method for quick network creation and training
 
-## Getting Started
+## Components
 
-### Prerequisites
+### Neuron
 
-- Node.js installed on your system
+The basic building block of the neural network. Each neuron:
+- Contains weights for each input connection
+- Has a bias value
+- Uses a sigmoid activation function
+- Performs forward propagation to produce an output
+- Can update its weights based on error during training
 
-### Installation
+### Network
 
-Clone the repository and navigate to the project directory:
+Orchestrates multiple neurons into a complete neural network. The network:
+- Consists of input, hidden, and output layers
+- Performs forward propagation through all layers
+- Implements simplified backpropagation for training
+- Calculates error metrics
 
-```bash
-git clone https://github.com/kichu12348/neru.git
-cd neru
-```
+## Usage Example
 
-## Usage
+Here's how to use Neru to solve the NAND logic problem:
 
-```javascript
-// Import the NeuralNetwork class
-const { NeuralNetwork } = require('./main.js');
+```typescript
+import Network from './network.ts';
 
-// Define your training data
+// Create a network with 2 inputs, 8 hidden neurons, and 1 output
+const network = new Network(2, 8, 1);
+
+// Training data for NAND gate
 const trainingData = [
-  { inputs: [0, 0], outputs: [0] }, // Example: XOR operation
-  { inputs: [0, 1], outputs: [1] },
-  { inputs: [1, 0], outputs: [1] },
-  { inputs: [1, 1], outputs: [0] }
+    { inputs: [0, 0], targets: [1] },
+    { inputs: [0, 1], targets: [1] },
+    { inputs: [1, 0], targets: [1] },
+    { inputs: [1, 1], targets: [0] }
 ];
 
-// Create and train a network
-const network = NeuralNetwork.createNetwork(trainingData, 10000);
+// Train the network
+const learningRate = 0.1;
+const epochs = 10000;
 
-// Use the trained network
-const result = network.feedForward([1, 0]);
-console.log(`Prediction: ${result}`);
+for (let i = 0; i < epochs; i++) {
+    // Training code...
+}
+
+// Make predictions
+const prediction = network.forward([1, 0]); // Should be close to 1
 ```
 
 ## How It Works
 
-The neural network consists of:
-1. An input layer (size determined by your input data)
-2. A hidden layer (configurable size, default is 4 neurons)
-3. An output layer (size determined by your output data)
+1. **Initialization**: Each neuron is created with random initial weights and biases
+2. **Forward Propagation**: Input signals flow through the network, with each neuron computing its output
+3. **Training**: 
+   - The network compares its prediction with the expected output
+   - It calculates the error
+   - It updates weights and biases to reduce the error in future predictions
+4. **Prediction**: Once trained, the network can make predictions on new inputs
 
-The network uses:
-- Sigmoid activation function: `1 / (1 + Math.exp(-x))`
-- Backpropagation for training
-- A default learning rate of 0.3
+## Getting Started
 
-## Example
+1. Clone the repository
+2. Ensure TypeScript is installed
+3. Run the example with:
+   ```
+   ts-node main.ts
+   ```
 
-The included example trains the network to understand the XOR logical operation:
+## Example Output
 
-| Input 1 | Input 2 | Output |
-|---------|---------|--------|
-| 0       | 0       | 0      |
-| 0       | 1       | 1      |
-| 1       | 0       | 1      |
-| 1       | 1       | 0      |
+When running the NAND gate example, you should see output similar to:
 
-Run the example:
+```
+Training the network...
+Epoch 0, Error: 0.247241, Learning rate: 0.1
+Epoch 1000, Error: 0.001237, Learning rate: 0.01
+...
 
-```bash
-node main.js
+Testing the network:
+Input: [0,0], Expected: 1, Predicted: 0.997
+Input: [0,1], Expected: 1, Predicted: 0.992
+Input: [1,0], Expected: 1, Predicted: 0.991
+Input: [1,1], Expected: 0, Predicted: 0.003
+
+Final predictions:
+0 NAND 0 = 0.997 (Rounded: 1)
+0 NAND 1 = 0.992 (Rounded: 1)
+1 NAND 0 = 0.991 (Rounded: 1)
+1 NAND 1 = 0.003 (Rounded: 0)
 ```
 
-Expected output:
+## Project Structure
+
+- `neuron.ts`: Implementation of a single neuron
+- `network.ts`: Implementation of the neural network
+- `main.ts`: Example usage solving the NAND problem
+
+## Limitations
+
+This is an educational implementation and has some limitations:
+- Uses simplified backpropagation
+- Limited to one hidden layer
+- Only implements sigmoid activation function
+- Not optimized for performance
 
