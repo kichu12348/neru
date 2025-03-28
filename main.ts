@@ -17,10 +17,15 @@ import Network from "./network.ts";
 // - 2 inputs (two binary values)
 // - 4 hidden neurons (we need at least 2 for XOR, using more for better results)
 // - 1 output (binary result)
-const network = new Network(3, 8, 1);
+const network:Network = new Network(3, 8, 1);
+
+interface TrainingData {
+  inputs: number[];
+  targets: number[];
+}
 
 // Training data for 3 inputs
-const trainingData = [
+const trainingData:TrainingData[] = [
   { inputs: [0, 0, 0], targets: [1] },
   { inputs: [0, 0, 1], targets: [1] },
   { inputs: [0, 1, 0], targets: [1] },
@@ -39,9 +44,9 @@ const initialLearningRate = 0.3;
 // Training the network
 console.log("Training the network...");
 for (let i = 0; i < epochs; i++) {
-  const shuffled = [...trainingData].sort(() => Math.random() - 0.5);
+  const shuffled:TrainingData[] = [...trainingData].sort(() => Math.random() - 0.5);
 
-  let totalError = 0;
+  let totalError:number = 0;
   for (const example of shuffled) {
     totalError += network.train(example.inputs, example.targets, learningRate);
   }
