@@ -31,32 +31,37 @@ Orchestrates multiple neurons into a complete neural network. The network:
 
 ## Usage Example
 
-Here's how to use Neru to solve the NAND logic problem:
+Here's how to use Neru to solve the 3-input NAND logic problem:
 
 ```typescript
 import Network from './network.ts';
 
-// Create a network with 2 inputs, 8 hidden neurons, and 1 output
-const network = new Network(2, 8, 1);
+// Create a network with 3 inputs, 8 hidden neurons, and 1 output
+const network = new Network(3, 8, 1);
 
-// Training data for NAND gate
+// Training data for 3-input NAND gate
 const trainingData = [
-    { inputs: [0, 0], targets: [1] },
-    { inputs: [0, 1], targets: [1] },
-    { inputs: [1, 0], targets: [1] },
-    { inputs: [1, 1], targets: [0] }
+    { inputs: [0, 0, 0], targets: [1] },
+    { inputs: [0, 0, 1], targets: [1] },
+    { inputs: [0, 1, 0], targets: [1] },
+    { inputs: [0, 1, 1], targets: [0] },
+    { inputs: [1, 0, 0], targets: [1] },
+    { inputs: [1, 0, 1], targets: [1] },
+    { inputs: [1, 1, 0], targets: [1] },
+    { inputs: [1, 1, 1], targets: [0] }
 ];
 
 // Train the network
-const learningRate = 0.1;
-const epochs = 10000;
+let learningRate = 0.3;
+const epochs = 15000;
+const initialLearningRate = 0.3;
 
 for (let i = 0; i < epochs; i++) {
     // Training code...
 }
 
 // Make predictions
-const prediction = network.forward([1, 0]); // Should be close to 1
+const prediction = network.forward([1, 0, 0]); // Should be close to 1
 ```
 
 ## How It Works
@@ -80,25 +85,42 @@ const prediction = network.forward([1, 0]); // Should be close to 1
 
 ## Example Output
 
-When running the NAND gate example, you should see output similar to:
+When running the 3-input NAND gate example, you should see output similar to:
 
 ```
 Training the network...
-Epoch 0, Error: 0.247241, Learning rate: 0.1
-Epoch 1000, Error: 0.001237, Learning rate: 0.01
-...
+Epoch 0, Error: 1.572464, Learning rate: 0.300000
+Epoch 1000, Error: 0.009319, Learning rate: 0.280000
+Epoch 2000, Error: 0.003812, Learning rate: 0.260000
+Epoch 3000, Error: 0.002380, Learning rate: 0.240000
+Epoch 4000, Error: 0.001746, Learning rate: 0.220000
+Epoch 5000, Error: 0.001395, Learning rate: 0.200000
+Epoch 6000, Error: 0.001177, Learning rate: 0.180000
+Epoch 7000, Error: 0.001030, Learning rate: 0.160000
+Epoch 8000, Error: 0.000926, Learning rate: 0.140000
+Epoch 9000, Error: 0.000851, Learning rate: 0.120000
+Epoch 10000, Error: 0.000797, Learning rate: 0.100000
+Epoch 11000, Error: 0.000756, Learning rate: 0.080000
+Epoch 12000, Error: 0.000728, Learning rate: 0.060000
+Epoch 13000, Error: 0.000708, Learning rate: 0.040000
+Epoch 14000, Error: 0.000697, Learning rate: 0.020000
 
 Testing the network:
-Input: [0,0], Expected: 1, Predicted: 0.997
-Input: [0,1], Expected: 1, Predicted: 0.992
-Input: [1,0], Expected: 1, Predicted: 0.991
-Input: [1,1], Expected: 0, Predicted: 0.003
+Input: [0,0,0], Expected: 1, Predicted: 1.000
+Input: [0,0,1], Expected: 1, Predicted: 0.990
+Input: [0,1,0], Expected: 1, Predicted: 0.990
+Input: [0,1,1], Expected: 0, Predicted: 0.013
+Input: [1,0,0], Expected: 1, Predicted: 1.000
+Input: [1,0,1], Expected: 1, Predicted: 0.992
+Input: [1,1,0], Expected: 1, Predicted: 0.993
+Input: [1,1,1], Expected: 0, Predicted: 0.014
 
 Final predictions:
-0 NAND 0 = 0.997 (Rounded: 1)
-0 NAND 1 = 0.992 (Rounded: 1)
-1 NAND 0 = 0.991 (Rounded: 1)
-1 NAND 1 = 0.003 (Rounded: 0)
+Prediction for [0, 0,0]: 1
+Prediction for [0, 1,0]: 1
+Prediction for [1, 0,0]: 1
+Prediction for [1, 1,1]: 0
+Prediction for [0, 0,1]: 1
 ```
 
 ## Project Structure
