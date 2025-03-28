@@ -1,6 +1,7 @@
 interface Neuron {
   forward(inputs: number[]): number;
-  update(inputs: number[], error: number, learningRate: number): void;
+  update(inputs: number[], gradient: number, learningRate: number): void;
+  getWeight(index: number): number;
 }
 
 class Neuron {
@@ -31,17 +32,20 @@ class Neuron {
     return this.#activate(sum);
   }
 
-  
+  // Get weight at specific index (needed for backpropagation)
+  getWeight(index: number): number {
+    if (index < 0 || index >= this.weights.length) {
+      throw new Error("Weight index out of bounds");
+    }
+    return this.weights[index];
+  }
 
   // Update weights and bias
-  update(inputs: number[],
-     error:number, learningRate:number) {
-    // Update bias
-    this.bias += learningRate * error; // Update bias
-
-    // Update weights
-    for (let i = 0; i < this.weights.length; i++)
-      this.weights[i] += learningRate * error * inputs[i];
+  update(inputs: number[], gradient: number, learningRate: number) {
+    this.bias += learningRate * gradient;
+    for (let i = 0; i < this.weights.length; i++) {
+      this.weights[i] += learningRate * gradient * inputs[i];
+    }
   }
 }
 

@@ -77,22 +77,25 @@ class Network {
             outputs.push(this.outputLayer[i].forward(hiddenOutputs));
         }
         
-        // Step 2: Update output layer weights based on error
+        // Step 2: Calculate output layer gradients and update
+        const outputGradients: number[] = [];
         for (let i = 0; i < this.outputLayer.length; i++) {
-            const error = targets[i] - outputs[i]; // How far off was our guess?
-            this.outputLayer[i].update(hiddenOutputs, error, learningRate);
+            const error = targets[i] - outputs[i];
+            const derivative = outputs[i] * (1 - outputs[i]); 
+            const gradient = error * derivative;
+            outputGradients.push(gradient);
+            this.outputLayer[i].update(hiddenOutputs, gradient, learningRate);
         }
         
-        // Step 3: Update hidden layer (simplified backpropagation)
+        // Step 3: Calculate hidden layer gradients and update
         for (let i = 0; i < this.hiddenLayer.length; i++) {
-            // Simple error propagation for demonstration
-            let error = 0;
-            for (let j = 0; j < targets.length; j++) {
-                error += targets[j] - outputs[j];
+            let hiddenError = 0;
+            for (let j = 0; j < this.outputLayer.length; j++) {
+                hiddenError += outputGradients[j] * this.outputLayer[j].getWeight(i);
             }
-            error /= targets.length; // Average error
-            
-            this.hiddenLayer[i].update(inputs, error * 0.5, learningRate);
+            const derivative = hiddenOutputs[i] * (1 - hiddenOutputs[i]);
+            const gradient = hiddenError * derivative;
+            this.hiddenLayer[i].update(inputs, gradient, learningRate);
         }
         
         // Calculate and return total error

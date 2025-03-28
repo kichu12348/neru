@@ -21,40 +21,34 @@ const network = new Network(2, 8, 1);
 
 // Training data for NAND gate
 const trainingData = [
-    { inputs: [0, 0], targets: [1] },
-    { inputs: [0, 1], targets: [1] },
-    { inputs: [1, 0], targets: [1] },
-    { inputs: [1, 1], targets: [0] }
+    { inputs: [0, 0], targets: [0] },
+    { inputs: [0, 1], targets: [0] },
+    { inputs: [1, 0], targets: [0] },
+    { inputs: [1, 1], targets: [1] }
 ];
 
 // Training parameters
 let learningRate = 0.3;
 const epochs = 15000;
+const initialLearningRate = 0.3;
 
 // Training the network
 console.log("Training the network...");
 for (let i = 0; i < epochs; i++) {
-    // Shuffle the training data for better training
     const shuffled = [...trainingData].sort(() => Math.random() - 0.5);
     
-    let totalError = 0; // value between 0 and 1
+    let totalError = 0;
     for (const example of shuffled) {
         totalError += network.train(example.inputs, example.targets, learningRate);
-        //adjust learning rate as per the error
-        if(totalError < 0.01){
-            learningRate = 0.01;
-        }
-        else if(totalError < 0.1){
-            learningRate = 0.05;
-        }
-        else if(totalError < 0.5) learningRate = 0.1;
-        else learningRate = 0.1; // lower the learning rate as the error decreases
-
     }
+    
+    // Gradually decrease learning rate over time
+    learningRate = initialLearningRate * (1 - i / epochs);
+    if (learningRate < 0.01) learningRate = 0.01; // Minimum learning rate
     
     // Log progress every 1000 epochs
     if (i % 1000 === 0) {
-        console.log(`Epoch ${i}, Error: ${totalError.toFixed(6)}, Learning rate: ${learningRate}`);
+        console.log(`Epoch ${i}, Error: ${totalError.toFixed(6)}, Learning rate: ${learningRate.toFixed(6)}`);
     }
 }
 
