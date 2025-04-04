@@ -1,4 +1,4 @@
-import Network from "./network.ts";
+import Network from "./network";
 
 // Example: Let's solve the XOR problem
 // XOR truth table:
@@ -82,7 +82,7 @@ function predict(input1: number, input2: number, input3: number): void {
   console.log(
     `Prediction for [${input1}, ${input2},${input3}]: ${Math.round(
       prediction[0]
-    )}`
+    )} predicted number ${prediction[0]}`
   );
 }
 

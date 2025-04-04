@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "Neru learns through these key methods:",
   "main": "main.ts",
-  "type":"module",
   "scripts": {
-    "start": "cls && node --experimental-strip-types main.ts"
+    "start": "npx tsc  && node dist/main.js"
   },
   "repository": {
     "type": "git",
@@ -17,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/kichu12348/neru/issues"
   },
-  "homepage": "https://github.com/kichu12348/neru#readme"
+  "homepage": "https://github.com/kichu12348/neru#readme",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
 }

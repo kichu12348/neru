@@ -1,4 +1,4 @@
-import Neuron from "./neuron.ts";
+import Neuron from "./neuron";
 
 interface Network{
     forward(inputs: number[]): number[];

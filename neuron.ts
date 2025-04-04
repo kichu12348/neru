@@ -15,7 +15,7 @@ class Neuron {
       .map(() => Math.random() * 2 - 1); // Random between -1 and 1
     this.bias = Math.random() * 2 - 1; // value between -1 and 1
   }
-  #activate(x: number) { // # means private
+  activate(x: number) { // # means private
     return 1 / (1 + Math.exp(-x)); // Sigmoid function 1/(1+e^-x) gives value between 0 and 1
   }
   // Forward propagation - calculate output
@@ -29,7 +29,7 @@ class Neuron {
       sum += inputs[i] * this.weights[i];
     }
 
-    return this.#activate(sum);
+    return this.activate(sum);
   }
 
   // Get weight at specific index (needed for backpropagation)
